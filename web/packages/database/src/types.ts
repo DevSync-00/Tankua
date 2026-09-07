@@ -59,6 +59,7 @@ export interface Database {
           images: string[] | null
           tags: string[] | null
           distance: number | null
+          is_featured: boolean
           created_at: string
           updated_at: string
         }
@@ -73,6 +74,7 @@ export interface Database {
           images?: string[] | null
           tags?: string[] | null
           distance?: number | null
+          is_featured?: boolean
           created_at?: string
           updated_at?: string
         }
@@ -87,6 +89,7 @@ export interface Database {
           images?: string[] | null
           tags?: string[] | null
           distance?: number | null
+          is_featured?: boolean
           created_at?: string
           updated_at?: string
         }

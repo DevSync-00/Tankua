@@ -962,6 +962,7 @@ export async function createDestination(destination: {
   tags?: string[];
   location?: any;
   category?: string;
+  is_featured?: boolean;
 }): Promise<{ success: boolean; id?: string; error?: string }> {
   try {
     const { data } = await adminDbRequest<any[]>({
@@ -978,6 +979,7 @@ export async function createDestination(destination: {
         tags: destination.tags || [],
         location: destination.location || null,
         category: destination.category || 'other',
+        is_featured: destination.is_featured || false,
       },
     });
 
@@ -999,6 +1001,7 @@ export async function updateDestination(
     tags?: string[];
     location?: any;
     category?: string;
+    is_featured?: boolean;
   }
 ): Promise<boolean> {
   try {
