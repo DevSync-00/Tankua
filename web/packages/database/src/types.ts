@@ -60,6 +60,7 @@ export interface Database {
           tags: string[] | null
           distance: number | null
           is_featured: boolean
+          is_popular: boolean
           created_at: string
           updated_at: string
         }
@@ -75,6 +76,7 @@ export interface Database {
           tags?: string[] | null
           distance?: number | null
           is_featured?: boolean
+          is_popular?: boolean
           created_at?: string
           updated_at?: string
         }
@@ -90,6 +92,7 @@ export interface Database {
           tags?: string[] | null
           distance?: number | null
           is_featured?: boolean
+          is_popular?: boolean
           created_at?: string
           updated_at?: string
         }

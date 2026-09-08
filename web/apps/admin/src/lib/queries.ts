@@ -963,6 +963,7 @@ export async function createDestination(destination: {
   location?: any;
   category?: string;
   is_featured?: boolean;
+  is_popular?: boolean;
 }): Promise<{ success: boolean; id?: string; error?: string }> {
   try {
     const { data } = await adminDbRequest<any[]>({
@@ -980,6 +981,7 @@ export async function createDestination(destination: {
         location: destination.location || null,
         category: destination.category || 'other',
         is_featured: destination.is_featured || false,
+        is_popular: destination.is_popular || false,
       },
     });
 
@@ -1002,6 +1004,7 @@ export async function updateDestination(
     location?: any;
     category?: string;
     is_featured?: boolean;
+    is_popular?: boolean;
   }
 ): Promise<boolean> {
   try {

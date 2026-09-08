@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import { Header } from "@/components/header";
 import { Card, CardContent, CardHeader, CardTitle, Button, Badge, Input } from "@tankua/ui";
-import { getDestinations, deleteDestination, type Destination as DestinationType } from "@tankua/database";
+import { getDestinations, deleteDestination, type Destination } from "@tankua/database";
 import { createDestination, updateDestination } from "@/lib/queries";
 import { supabase } from "@/lib/supabase";
 
@@ -47,6 +47,11 @@ const getCategory = (category: string) => {
 };
 
 const getCategoryLabel = (category: string) => getCategory(category).label;
+
+type DestinationType = Destination & {
+  is_featured?: boolean;
+  is_popular?: boolean;
+};
 
 export default function DestinationsPage() {
   const [destinations, setDestinations] = useState<DestinationType[]>([]);
@@ -78,6 +83,7 @@ export default function DestinationsPage() {
     tags: "",
     images: "",
     is_featured: false,
+    is_popular: false,
   });
   
   // File upload state
@@ -138,6 +144,7 @@ export default function DestinationsPage() {
       tags: "",
       images: "",
       is_featured: false,
+      is_popular: false,
     });
     setSelectedDestination(null);
     setUploadedImages([]);
@@ -161,6 +168,7 @@ export default function DestinationsPage() {
       tags: destination.tags?.join(", ") || "",
       images: existingImages.join(", ") || "",
       is_featured: destination.is_featured || false,
+      is_popular: destination.is_popular || false,
     });
     setUploadedImages([]);
     setExistingImageUrls(existingImages);
@@ -317,6 +325,7 @@ export default function DestinationsPage() {
         tags: formData.tags ? formData.tags.split(",").map(t => t.trim()).filter(Boolean) : [],
         images: imageUrls,
         is_featured: formData.is_featured,
+        is_popular: formData.is_popular,
       };
 
       if (selectedDestination) {
@@ -504,6 +513,11 @@ export default function DestinationsPage() {
                       <Badge className="gap-1 bg-amber-500 text-white">
                         <Star className="h-3 w-3" fill="currentColor" /> Featured
                       </Badge>
+                    </div>
+                  )}
+                  {destination.is_popular && (
+                    <div className="absolute bottom-2 left-2">
+                      <Badge className="bg-sky-600 text-white">Popular</Badge>
                     </div>
                   )}
                   {/* Overlay actions */}
@@ -714,6 +728,21 @@ export default function DestinationsPage() {
                     <span className="block text-sm font-medium">Show in Telegram Featured</span>
                     <span className="block text-xs text-muted-foreground mt-1">
                       Featured destinations appear in the Telegram mini app home section.
+                    </span>
+                  </span>
+                </label>
+
+                <label className="flex items-start gap-3 rounded-xl border border-border p-4 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={formData.is_popular}
+                    onChange={(e) => setFormData({ ...formData, is_popular: e.target.checked })}
+                    className="mt-1 h-4 w-4 accent-sky-600"
+                  />
+                  <span>
+                    <span className="block text-sm font-medium">Show in Telegram Popular</span>
+                    <span className="block text-xs text-muted-foreground mt-1">
+                      Select up to six destinations for the Popular section below Featured.
                     </span>
                   </span>
                 </label>
